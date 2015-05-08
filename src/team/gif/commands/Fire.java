@@ -23,20 +23,27 @@ public class Fire extends CommandBase {
     protected void execute() {
         shooter.drive(Globals.shooterSpeed);
         
-        if (Timer.getFPGATimestamp() - initTime > Globals.fireTime) {
+        if (Timer.getFPGATimestamp() - initTime > Globals.fireTime || Globals.isRevved) {
             elevator.driveTop(Globals.collectorSpeed);
         }
         
     }
 
     protected boolean isFinished() {
-        return ((Timer.getFPGATimestamp() - initTime) > (Globals.fireTime + Globals.fireCooldown));
+    	if (Globals.isRevved) {
+    		return Timer.getFPGATimestamp() - initTime > Globals.fireCooldown;
+    	} else {
+    		return ((Timer.getFPGATimestamp() - initTime) > (Globals.fireTime + Globals.fireCooldown));
+    	}
     }
 
     protected void end() {
         shooter.drive(0);
         elevator.driveTop(0);
+        Globals.isRevved = false;
     }
 
-    protected void interrupted() {}
+    protected void interrupted() {
+    	Globals.isRevved = false;
+    }
 }

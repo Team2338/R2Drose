@@ -1,5 +1,6 @@
 package team.gif.commands;
 
+import team.gif.Globals;
 import team.gif.OI;
 
 /**
@@ -16,8 +17,17 @@ public class TankDriveLinear extends CommandBase {
     }
 
     protected void execute() {
-        chassis.driveLeft(OI.leftStick.getY());
-        chassis.driveRight(OI.rightStick.getY());
+    	if (Math.abs(OI.leftStick.getY()) > Globals.deadzone) {
+    		chassis.driveLeft(OI.leftStick.getY());
+    	} else {
+    		chassis.driveLeft(0);
+    	}
+    	
+    	if (Math.abs(OI.rightStick.getY()) > Globals.deadzone) {
+    		chassis.driveRight(OI.rightStick.getY());
+    	} else {
+    		chassis.driveRight(0);
+    	}
     }
 
     protected boolean isFinished() {

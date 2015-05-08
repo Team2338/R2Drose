@@ -22,7 +22,7 @@ public class OI {
         right2 = new JoystickButton(rightStick, 2);
         right3 = new JoystickButton(rightStick, 3);
         
-        leftTrigger.whenPressed(new RapidFire());
+        leftTrigger.whileHeld(new RevShooter());
         rightTrigger.whenPressed(new AutoFire());
         right2.whenPressed(new AutoCollect());
         right3.whileHeld(new Eject());
